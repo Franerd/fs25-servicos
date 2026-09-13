@@ -1,0 +1,10 @@
+[
+  {"id":"plantio-basico","name":"Plantio Básico","icon":"🌱","description":"Cultivação + plantio + rolagem","price":3000,"unit":"ha"},
+  {"id":"plantio-completo","name":"Plantio Completo","icon":"🌱","description":"Cultivação + calcário + fertilizante + plantio + rolagem","price":4500,"unit":"ha"},
+  {"id":"preparo-completo","name":"Preparo Completo","icon":"🚜","description":"Subsolagem + cultivo + calcário","price":3500,"unit":"ha"},
+  {"id":"tratamento-lavoura","name":"Tratamento da Lavoura","icon":"🧪","description":"Fertilização + herbicida ou pulverização","price":1500,"unit":"ha"},
+  {"id":"colheita-completa","name":"Colheita Completa","icon":"🌽","description":"Colheita + transporte","price":3200,"unit":"ha"},
+  {"id":"feno-completo","name":"Feno Completo","icon":"🌿","description":"Corte + revolvimento + enleiramento + enfardamento","price":3500,"unit":"ha"},
+  {"id":"silagem-completa","name":"Silagem Completa","icon":"🐄","description":"Corte + transporte + compactação","price":4200,"unit":"ha"}
+]
+
