@@ -309,10 +309,19 @@ document.querySelectorAll(".video-choice").forEach(
         .querySelectorAll(".video-choice")
         .forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
-      $("#fs25-video").src =
-        `https://www.youtube-nocookie.com/embed/${button.dataset.video}?rel=0&autoplay=1`;
+      $("#fs25-video").src = youtubeEmbed(button.dataset.video, "rel=0&autoplay=1");
     }),
 );
+function youtubeEmbed(videoId, options = "") {
+  const origin = encodeURIComponent(location.origin);
+  return `https://www.youtube.com/embed/${videoId}?origin=${origin}${options ? `&${options}` : ""}`;
+}
+const operationVideo = $(".operation-video");
+operationVideo.src = youtubeEmbed(
+  operationVideo.dataset.video,
+  `autoplay=1&mute=1&controls=0&loop=1&playlist=${operationVideo.dataset.video}&rel=0&playsinline=1`,
+);
+$("#fs25-video").src = youtubeEmbed($("#fs25-video").dataset.video, "rel=0");
 load().catch(() =>
   document.body.insertAdjacentHTML(
     "afterbegin",
