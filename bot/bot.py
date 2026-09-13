@@ -128,13 +128,20 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     setup_database()
+    print(f"Conectado como {bot.user}")
+    if ORDERS_CHANNEL_ID:
+        orders_channel = bot.get_channel(ORDERS_CHANNEL_ID)
+        if orders_channel:
+            permissions = orders_channel.permissions_for(orders_channel.guild.me)
+            print(f"Canal de pedidos: #{orders_channel.name} | enviar={permissions.send_messages} | embeds={permissions.embed_links}")
+        else:
+            print("Canal de pedidos não está visível no cache do bot.")
     if GUILD_ID:
         guild = discord.Object(id=GUILD_ID)
         bot.tree.copy_global_to(guild=guild)
         await bot.tree.sync(guild=guild)
     else:
         await bot.tree.sync()
-    print(f"Conectado como {bot.user}")
 
 
 async def item_autocomplete(_, current: str):
@@ -146,7 +153,7 @@ async def item_autocomplete(_, current: str):
 @bot.tree.command(name="orcamento", description="Calcula um orçamento de serviço agrícola")
 @app_commands.describe(servico="Serviço ou pacote", quantidade="Hectares, horas ou viagens", insumos="Custo real dos insumos fornecidos pela empresa")
 @app_commands.autocomplete(servico=item_autocomplete)
-async def orcamento(interaction: discord.Interaction, servico: str, quantidade: app_commands.Range[float, 0.1, 10000], insumos: app_commands.Range[float, 0, 100000000] = 0):
+async def orcamento(interaction: discord.Interaction, servico: str, quantidade: app_commands.Range[float, 0.1, 10000.0], insumos: app_commands.Range[float, 0.0, 100000000.0] = 0):
     item = SERVICES.get(servico) or PACKAGES.get(servico)
     if not item:
         await interaction.response.send_message("Serviço não encontrado.", ephemeral=True); return
@@ -166,7 +173,7 @@ async def orcamento(interaction: discord.Interaction, servico: str, quantidade: 
 @bot.tree.command(name="solicitar", description="Cria uma ordem de serviço")
 @app_commands.describe(fazenda="Nome da fazenda", campo="Número ou nome do campo", servico="Serviço ou pacote", quantidade="Hectares, horas ou viagens", insumos="Custo real dos insumos fornecidos pela empresa")
 @app_commands.autocomplete(servico=item_autocomplete)
-async def solicitar(interaction: discord.Interaction, fazenda: str, campo: str, servico: str, quantidade: app_commands.Range[float, 0.1, 10000], insumos: app_commands.Range[float, 0, 100000000] = 0):
+async def solicitar(interaction: discord.Interaction, fazenda: str, campo: str, servico: str, quantidade: app_commands.Range[float, 0.1, 10000.0], insumos: app_commands.Range[float, 0.0, 100000000.0] = 0):
     item = SERVICES.get(servico) or PACKAGES.get(servico)
     if not item:
         await interaction.response.send_message("Serviço não encontrado.", ephemeral=True); return
@@ -184,6 +191,9 @@ async def solicitar(interaction: discord.Interaction, fazenda: str, campo: str, 
     embed.add_field(name="Valor", value=f"**{money(total)}**")
     embed.add_field(name="Status", value=STATUS["aguardando_aprovacao"], inline=False)
     channel = bot.get_channel(ORDERS_CHANNEL_ID) if ORDERS_CHANNEL_ID else interaction.channel
+    if channel is None:
+        await interaction.response.send_message("Não consigo acessar o canal configurado para pedidos. Verifique as permissões do FraBot.", ephemeral=True)
+        return
     await channel.send(embed=embed, view=OrderView(order_id))
     await interaction.response.send_message(f"Pedido criado: **OS #{order_id:04d}**. Você pode acompanhar com `/minhas-os`.", ephemeral=True)
 
