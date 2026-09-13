@@ -1,11 +1,368 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#112118"><meta name="description" content="Central de serviços agrícolas para Farming Simulator 25: catálogo, orçamento e ordens de serviço."><meta property="og:title" content="FS25 Serviços Agrícolas"><meta property="og:description" content="Seu campo pronto, sem perder a safra."><title>FS25 Serviços Agrícolas</title><link rel="stylesheet" href="assets/style.css"></head>
-<body><header id="inicio" class="hero"><nav class="nav"><a class="brand" href="#inicio"><span class="brand-mark">F25</span><span>FS25 <b>Serviços</b></span></a><button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><div id="nav-links" class="nav-links"><a href="#servicos">Serviços</a><a href="#pacotes">Pacotes</a><a href="#orcamento">Orçamento</a><a href="#pedidos">Pedidos</a><a class="nav-cta" href="#solicitar">Solicitar serviço</a></div></nav><div class="hero-inner"><div class="hero-copy"><span class="availability"><i></i> Agenda aberta para novos serviços</span><p class="eyebrow">EMPREITEIRA AGRÍCOLA • FARMING SIMULATOR 25</p><h1>Operação precisa.<br><em>Safra no prazo.</em></h1><p class="hero-lead">Do preparo à colheita, cuidamos do campo com preços transparentes, frota adequada e acompanhamento de cada ordem.</p><div class="actions"><a class="button primary" href="#orcamento">Calcular agora <span>→</span></a><a class="button ghost" href="#servicos">Explorar serviços</a></div><div class="trust"><div><strong>38</strong><span>serviços</span></div><div><strong>7</strong><span>pacotes</span></div><div><strong>10%</strong><span>desconto máx.</span></div><div><strong>24h</strong><span>para responder</span></div></div></div><aside class="hero-board"><div class="board-top"><span>OPERAÇÃO ATUAL</span><span class="live">● AO VIVO</span></div><div class="field-visual"><span class="tractor">🚜</span><div class="field-lines"></div><span class="field-label">CAMPO 17 • SOJA</span></div><div class="board-info"><div><small>SERVIÇO</small><strong>Plantio direto</strong></div><div><small>PROGRESSO</small><strong>18,6 / 27,5 ha</strong></div></div><div class="progress"><i style="width:68%"></i></div><div class="board-footer"><span>Previsão: próxima sessão</span><b>68%</b></div></aside></div></header>
-<main><section class="strip"><div><span>01</span><p><b>Escolha o serviço</b><small>Avulso ou pacote completo</small></p></div><i>→</i><div><span>02</span><p><b>Calcule o valor</b><small>Desconto automático por área</small></p></div><i>→</i><div><span>03</span><p><b>Envie o pedido</b><small>Acompanhe pelo Discord</small></p></div></section>
-<section id="servicos" class="section"><div class="section-title"><div><p class="eyebrow">CATÁLOGO OFICIAL</p><h2>Trabalho certo em<br>cada etapa da safra.</h2></div><p>Preços incluem máquina, combustível, desgaste e operador. Insumos são calculados separadamente.</p></div><div class="catalog-tools"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Buscar plantio, colheita, transporte…" aria-label="Buscar serviço"></label><div id="filters" class="filters"></div></div><p id="result-count" class="result-count"></p><div id="services" class="service-grid"></div><button id="show-more" class="show-more" type="button">Ver todos os serviços</button></section>
-<section id="pacotes" class="dark-section"><div class="section wide"><div class="section-title light"><div><p class="eyebrow">PACOTES AGRÍCOLAS</p><h2>Mais resultado.<br>Menor custo por hectare.</h2></div><p>Operações combinadas com valor fechado e desconto progressivo conforme o tamanho da área.</p></div><div id="packages" class="package-grid"></div></div></section>
-<section id="orcamento" class="section quote-layout"><div class="quote-intro"><p class="eyebrow">ORÇAMENTO INSTANTÂNEO</p><h2>Descubra o valor antes de contratar.</h2><p>O cálculo segue a mesma regra usada pelo bot. Sem surpresas entre o orçamento e a ordem.</p><div class="discount-scale"><span>até 10 ha<b>preço normal</b></span><span>10–25 ha<b>−5%</b></span><span>25–50 ha<b>−8%</b></span><span>+50 ha<b>−10%</b></span></div></div><form id="quote-form" class="quote-card"><div class="form-head"><span>SIMULAÇÃO DE PREÇO</span><b id="quote-badge">SERVIÇO AVULSO</b></div><div class="field-row"><label>Modalidade<select id="quote-type"><option value="service">Serviço avulso</option><option value="package">Pacote agrícola</option></select></label><label><span id="quantity-label">Área em hectares</span><div class="input-suffix"><input id="quantity" type="number" min="0.1" step="0.1" value="18" required><span id="unit-suffix">ha</span></div></label></div><label>Serviço<select id="quote-item"></select></label><label class="switch-line"><span><b>Insumos fornecidos pela empresa</b><small>Adiciona custo informado + taxa de 10%</small></span><input id="supply" type="checkbox"><i></i></label><label id="input-cost-wrap" class="hidden">Custo real dos insumos<input id="input-cost" type="number" min="0" step="100" value="0"></label><div class="result"><div><span>Preço-base</span><strong id="subtotal">—</strong></div><div><span id="discount-label">Desconto</span><strong id="discount">—</strong></div><div id="inputs-row" class="hidden"><span>Insumos + taxa de 10%</span><strong id="inputs-total">—</strong></div><div class="total"><span>Total estimado<small id="minimum-note"></small></span><strong id="total">—</strong></div></div><div class="quote-actions"><button id="copy" class="button primary" type="button">Copiar para o Discord</button><button id="use-quote" class="button outline" type="button">Transformar em pedido</button></div><p id="copy-status" role="status"></p></form></section>
-<section id="solicitar" class="request-section"><div class="section request-grid"><div><p class="eyebrow">ORDEM DE SERVIÇO</p><h2>Envie os dados do campo.</h2><p>Esta versão gera a OS no navegador e deixa a mensagem pronta para o Discord. Quando o bot estiver ativo, ele cuidará da aprovação e dos status.</p><ul><li>✓ Número automático da ordem</li><li>✓ Resumo completo para o Discord</li><li>✓ Histórico salvo neste dispositivo</li></ul></div><form id="request-form" class="request-card"><div class="field-row"><label>Cliente<input id="customer" required placeholder="Seu nome"></label><label>Fazenda<input id="farm" required placeholder="Ex.: Santa Rita"></label></div><div class="field-row"><label>Campo<input id="field" required placeholder="Ex.: Campo 12"></label><label>Cultura<input id="crop" placeholder="Ex.: Soja"></label></div><label>Observações<textarea id="notes" rows="3" placeholder="Acesso, insumos, prioridade ou detalhes do serviço"></textarea></label><button class="button primary" type="submit">Gerar ordem de serviço <span>→</span></button><p id="request-status" role="status"></p></form></div></section>
-<section id="pedidos" class="section"><div class="section-title"><div><p class="eyebrow">ACOMPANHAMENTO</p><h2>Pedidos neste dispositivo.</h2></div><button id="clear-orders" class="text-button" type="button">Limpar histórico</button></div><div id="orders" class="orders"></div></section>
-<section id="regras" class="rules-section"><div class="section"><p class="eyebrow">REGRAS DA OPERAÇÃO</p><h2>Transparência desde o primeiro hectare.</h2><div class="rules-grid"><article><b>01</b><h3>Insumos separados</h3><p>Sementes, fertilizantes e produtos são do cliente. Se fornecidos, cobramos custo real + 10%.</p></article><article><b>02</b><h3>Mínimo operacional</h3><p>Serviços por hectare têm cobrança mínima de $ 5.000 para cobrir o deslocamento.</p></article><article><b>03</b><h3>Desconto progressivo</h3><p>Áreas maiores recebem automaticamente descontos de 5%, 8% ou 10%.</p></article><article><b>04</b><h3>Execução e pagamento</h3><p>O campo deve estar acessível. Pagamento na conclusão e extras cobrados à parte.</p></article></div></div></section></main>
-<footer><div><a class="brand" href="#inicio"><span class="brand-mark">F25</span><span>FS25 <b>Serviços</b></span></a><p>Empreiteira agrícola para o seu servidor.</p></div><div><b>Navegação</b><a href="#servicos">Serviços</a><a href="#orcamento">Orçamento</a><a href="#solicitar">Solicitar</a></div><div><b>Operação</b><span>Atendimento pelo Discord</span><span>Pagamento na conclusão</span><span>Valores em $ do jogo</span></div></footer><div id="toast" class="toast" role="status"></div><script src="assets/app.js"></script></body></html>
-
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#112118" />
+    <meta
+      name="description"
+      content="Central de serviços agrícolas para Farming Simulator 25: catálogo, orçamento e ordens de serviço."
+    />
+    <meta property="og:title" content="FS25 Serviços Agrícolas" />
+    <meta
+      property="og:description"
+      content="Seu campo pronto, sem perder a safra."
+    />
+    <title>FS25 Serviços Agrícolas</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header id="inicio" class="hero">
+      <nav class="nav">
+        <a class="brand" href="#inicio"
+          ><span class="brand-mark">F25</span
+          ><span>FS25 <b>Serviços</b></span></a
+        ><button
+          id="menu-toggle"
+          class="menu-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <div id="nav-links" class="nav-links">
+          <a href="#servicos">Serviços</a><a href="#pacotes">Pacotes</a
+          ><a href="#orcamento">Orçamento</a><a href="#videos">Vídeos</a
+          ><a href="#pedidos">Pedidos</a
+          ><a class="nav-cta" href="#solicitar">Solicitar serviço</a>
+        </div>
+      </nav>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="availability"
+            ><i></i> Agenda aberta para novos serviços</span
+          >
+          <p class="eyebrow">EMPREITEIRA AGRÍCOLA • FARMING SIMULATOR 25</p>
+          <h1>Operação precisa.<br /><em>Safra no prazo.</em></h1>
+          <p class="hero-lead">
+            Do preparo à colheita, cuidamos do campo com preços transparentes,
+            frota adequada e acompanhamento de cada ordem.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#orcamento"
+              >Calcular agora <span>→</span></a
+            ><a class="button ghost" href="#servicos">Explorar serviços</a>
+          </div>
+          <div class="trust">
+            <div><strong>38</strong><span>serviços</span></div>
+            <div><strong>7</strong><span>pacotes</span></div>
+            <div><strong>10%</strong><span>desconto máx.</span></div>
+            <div><strong>24h</strong><span>para responder</span></div>
+          </div>
+        </div>
+        <aside class="hero-board">
+          <div class="board-top">
+            <span>OPERAÇÃO ATUAL</span><span class="live">● AO VIVO</span>
+          </div>
+          <div class="field-visual">
+            <span class="tractor">🚜</span>
+            <div class="field-lines"></div>
+            <span class="field-label">CAMPO 17 • SOJA</span>
+          </div>
+          <div class="board-info">
+            <div><small>SERVIÇO</small><strong>Plantio direto</strong></div>
+            <div><small>PROGRESSO</small><strong>18,6 / 27,5 ha</strong></div>
+          </div>
+          <div class="progress"><i style="width: 68%"></i></div>
+          <div class="board-footer">
+            <span>Previsão: próxima sessão</span><b>68%</b>
+          </div>
+        </aside>
+      </div>
+    </header>
+    <main>
+      <section class="strip">
+        <div>
+          <span>01</span>
+          <p>
+            <b>Escolha o serviço</b><small>Avulso ou pacote completo</small>
+          </p>
+        </div>
+        <i>→</i>
+        <div>
+          <span>02</span>
+          <p>
+            <b>Calcule o valor</b><small>Desconto automático por área</small>
+          </p>
+        </div>
+        <i>→</i>
+        <div>
+          <span>03</span>
+          <p><b>Envie o pedido</b><small>Acompanhe pelo Discord</small></p>
+        </div>
+      </section>
+      <section id="servicos" class="section">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">CATÁLOGO OFICIAL</p>
+            <h2>Trabalho certo em<br />cada etapa da safra.</h2>
+          </div>
+          <p>
+            Preços incluem máquina, combustível, desgaste e operador. Insumos
+            são calculados separadamente.
+          </p>
+        </div>
+        <div class="catalog-tools">
+          <label class="search-box"
+            ><span>⌕</span
+            ><input
+              id="search"
+              type="search"
+              placeholder="Buscar plantio, colheita, transporte…"
+              aria-label="Buscar serviço"
+          /></label>
+          <div id="filters" class="filters"></div>
+        </div>
+        <p id="result-count" class="result-count"></p>
+        <div id="services" class="service-grid"></div>
+        <button id="show-more" class="show-more" type="button">
+          Ver todos os serviços
+        </button>
+      </section>
+      <section id="pacotes" class="dark-section">
+        <div class="section wide">
+          <div class="section-title light">
+            <div>
+              <p class="eyebrow">PACOTES AGRÍCOLAS</p>
+              <h2>Mais resultado.<br />Menor custo por hectare.</h2>
+            </div>
+            <p>
+              Operações combinadas com valor fechado e desconto progressivo
+              conforme o tamanho da área.
+            </p>
+          </div>
+          <div id="packages" class="package-grid"></div>
+        </div>
+      </section>
+      <section id="orcamento" class="section quote-layout">
+        <div class="quote-intro">
+          <p class="eyebrow">ORÇAMENTO INSTANTÂNEO</p>
+          <h2>Descubra o valor antes de contratar.</h2>
+          <p>
+            O cálculo segue a mesma regra usada pelo bot. Sem surpresas entre o
+            orçamento e a ordem.
+          </p>
+          <div class="discount-scale">
+            <span>até 10 ha<b>preço normal</b></span
+            ><span>10–25 ha<b>−5%</b></span
+            ><span>25–50 ha<b>−8%</b></span
+            ><span>+50 ha<b>−10%</b></span>
+          </div>
+        </div>
+        <form id="quote-form" class="quote-card">
+          <div class="form-head">
+            <span>SIMULAÇÃO DE PREÇO</span
+            ><b id="quote-badge">SERVIÇO AVULSO</b>
+          </div>
+          <div class="field-row">
+            <label
+              >Modalidade<select id="quote-type">
+                <option value="service">Serviço avulso</option>
+                <option value="package">Pacote agrícola</option>
+              </select></label
+            ><label
+              ><span id="quantity-label">Área em hectares</span>
+              <div class="input-suffix">
+                <input
+                  id="quantity"
+                  type="number"
+                  min="0.1"
+                  step="0.1"
+                  value="18"
+                  required
+                /><span id="unit-suffix">ha</span>
+              </div></label
+            >
+          </div>
+          <label>Serviço<select id="quote-item"></select></label
+          ><label class="switch-line"
+            ><span
+              ><b>Insumos fornecidos pela empresa</b
+              ><small>Adiciona custo informado + taxa de 10%</small></span
+            ><input id="supply" type="checkbox" /><i></i></label
+          ><label id="input-cost-wrap" class="hidden"
+            >Custo real dos insumos<input
+              id="input-cost"
+              type="number"
+              min="0"
+              step="100"
+              value="0"
+          /></label>
+          <div class="result">
+            <div><span>Preço-base</span><strong id="subtotal">—</strong></div>
+            <div>
+              <span id="discount-label">Desconto</span
+              ><strong id="discount">—</strong>
+            </div>
+            <div id="inputs-row" class="hidden">
+              <span>Insumos + taxa de 10%</span
+              ><strong id="inputs-total">—</strong>
+            </div>
+            <div class="total">
+              <span>Total estimado<small id="minimum-note"></small></span
+              ><strong id="total">—</strong>
+            </div>
+          </div>
+          <div class="quote-actions">
+            <button id="copy" class="button primary" type="button">
+              Copiar para o Discord</button
+            ><button id="use-quote" class="button outline" type="button">
+              Transformar em pedido
+            </button>
+          </div>
+          <p id="copy-status" role="status"></p>
+        </form>
+      </section>
+      <section id="solicitar" class="request-section">
+        <div class="section request-grid">
+          <div>
+            <p class="eyebrow">ORDEM DE SERVIÇO</p>
+            <h2>Envie os dados do campo.</h2>
+            <p>
+              Esta versão gera a OS no navegador e deixa a mensagem pronta para
+              o Discord. Quando o bot estiver ativo, ele cuidará da aprovação e
+              dos status.
+            </p>
+            <ul>
+              <li>✓ Número automático da ordem</li>
+              <li>✓ Resumo completo para o Discord</li>
+              <li>✓ Histórico salvo neste dispositivo</li>
+            </ul>
+          </div>
+          <form id="request-form" class="request-card">
+            <div class="field-row">
+              <label
+                >Cliente<input
+                  id="customer"
+                  required
+                  placeholder="Seu nome" /></label
+              ><label
+                >Fazenda<input id="farm" required placeholder="Ex.: Santa Rita"
+              /></label>
+            </div>
+            <div class="field-row">
+              <label
+                >Campo<input
+                  id="field"
+                  required
+                  placeholder="Ex.: Campo 12" /></label
+              ><label>Cultura<input id="crop" placeholder="Ex.: Soja" /></label>
+            </div>
+            <label
+              >Observações<textarea
+                id="notes"
+                rows="3"
+                placeholder="Acesso, insumos, prioridade ou detalhes do serviço"
+              ></textarea></label
+            ><button class="button primary" type="submit">
+              Gerar ordem de serviço <span>→</span>
+            </button>
+            <p id="request-status" role="status"></p>
+          </form>
+        </div>
+      </section>
+      <section id="pedidos" class="section">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">ACOMPANHAMENTO</p>
+            <h2>Pedidos neste dispositivo.</h2>
+          </div>
+          <button id="clear-orders" class="text-button" type="button">
+            Limpar histórico
+          </button>
+        </div>
+        <div id="orders" class="orders"></div>
+      </section>
+      <section id="videos" class="video-section">
+        <div class="section">
+          <div class="section-title light">
+            <div>
+              <p class="eyebrow">FS25 EM AÇÃO</p>
+              <h2>Enquanto a próxima<br />operação não começa.</h2>
+            </div>
+            <p>Assista a vídeos oficiais de Farming Simulator 25 sem sair da central de serviços.</p>
+          </div>
+          <div class="video-layout">
+            <div class="video-player">
+              <iframe id="fs25-video" src="https://www.youtube-nocookie.com/embed/8MlSiOBNSSs?rel=0" title="Farming Simulator 25 — vídeo oficial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-list">
+              <button class="video-choice active" type="button" data-video="8MlSiOBNSSs"><span>01</span><span><b>Trailer cinematográfico</b><small>Apresentação oficial do FS25</small></span></button>
+              <button class="video-choice" type="button" data-video="AzCsuEziJ_k"><span>02</span><span><b>Trailer de lançamento</b><small>Máquinas, mapas e novas culturas</small></span></button>
+              <p>Conteúdo do canal oficial Farming Simulator no YouTube.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="regras" class="rules-section">
+        <div class="section">
+          <p class="eyebrow">REGRAS DA OPERAÇÃO</p>
+          <h2>Transparência desde o primeiro hectare.</h2>
+          <div class="rules-grid">
+            <article>
+              <b>01</b>
+              <h3>Insumos separados</h3>
+              <p>
+                Sementes, fertilizantes e produtos são do cliente. Se
+                fornecidos, cobramos custo real + 10%.
+              </p>
+            </article>
+            <article>
+              <b>02</b>
+              <h3>Mínimo operacional</h3>
+              <p>
+                Serviços por hectare têm cobrança mínima de $ 5.000 para cobrir
+                o deslocamento.
+              </p>
+            </article>
+            <article>
+              <b>03</b>
+              <h3>Desconto progressivo</h3>
+              <p>
+                Áreas maiores recebem automaticamente descontos de 5%, 8% ou
+                10%.
+              </p>
+            </article>
+            <article>
+              <b>04</b>
+              <h3>Execução e pagamento</h3>
+              <p>
+                O campo deve estar acessível. Pagamento na conclusão e extras
+                cobrados à parte.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div>
+        <a class="brand" href="#inicio"
+          ><span class="brand-mark">F25</span
+          ><span>FS25 <b>Serviços</b></span></a
+        >
+        <p>Empreiteira agrícola para o seu servidor.</p>
+      </div>
+      <div>
+        <b>Navegação</b><a href="#servicos">Serviços</a
+        ><a href="#orcamento">Orçamento</a><a href="#solicitar">Solicitar</a>
+      </div>
+      <div>
+        <b>Operação</b><span>Atendimento pelo Discord</span
+        ><span>Pagamento na conclusão</span><span>Valores em $ do jogo</span>
+      </div>
+    </footer>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
